@@ -1,18 +1,28 @@
-function generatePDF() { // eslint-disable-line no-unused-vars
-  window.dronedeploy.Plans.getCurrentlyViewed()
-  .then((res) => fetchTileDataFromPlan(res))
-  .then((res) => getDataUrlViaCustomWebServer(res.tiles))
-  .then((encodedTiles) => {
-    const docDefinition = generatePDFcontent(encodedTiles);
-    // decided to have client side PDF printing with the pure javascript module: pdfmake
-    pdfMake.createPdf(docDefinition).open();
-  })
-  .catch(console.log);
+function onClickHandler() { // eslint-disable-line no-unused-vars
+  dronedeployApiReady()
+    .then(window.dronedeploy.Plans.getCurrentlyViewed)
+    .then(fetchTileDataFromPlan)
+    .then(getTilesFromResponse)
+    .then(getDataUrlViaCustomWebServer)
+    .then(generatePDF)
+    .catch(console.log);
+}
+
+function dronedeployApiReady() {
+  return new Promise((resolve) => {
+    window.dronedeploy.onload(() => {
+      resolve();
+    });
+  });
 }
 
 function fetchTileDataFromPlan(plan) {
   // assumed the default layerName as 'ortho' and zoom level as 16
   return window.dronedeploy.Tiles.get({planId: String(plan.id), layerName: 'ortho', zoom: 16});
+}
+
+function getTilesFromResponse(tileResponse) {
+  return tileResponse.tiles;
 }
 
 function getDataUrlViaCustomWebServer(tiles) {
@@ -24,9 +34,14 @@ function getDataUrlViaCustomWebServer(tiles) {
     method: 'POST',
     body: body
   })
-  .then((res) => res.json())
-  .then((rjson) => rjson.msg)
-  .catch(console.log);
+    .then((res) => res.json())
+    .then((rjson) => rjson.msg);
+}
+
+function generatePDF(encodedTiles) {
+  const docDefinition = generatePDFcontent(encodedTiles);
+  // decided to have client side PDF printing with the pure javascript module: pdfmake
+  pdfMake.createPdf(docDefinition).open();
 }
 
 function generatePDFcontent(list) {
