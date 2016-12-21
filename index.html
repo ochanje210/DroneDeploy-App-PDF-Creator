@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>PDF Exporter</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src='build/pdfmake.min.js'></script>
+    <script src='build/vfs_fonts.js'></script>
+  </head>
+  <body>
+    <div class="container button-container" onclick="generatePDF()">
+      <div class="row">
+        <div class="col-1">
+          <img class="icon" src="pdf_logo.png">
+          <div class="button-text">Generate</div>
+        </div>
+        <div class="col-3 explanation-text">
+          Generate a PDF of this map
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

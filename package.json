@@ -1,0 +1,17 @@
+{
+  "name": "youngchanje",
+  "version": "1.0.0",
+  "description": "DroneDeploy App: PDF Creator",
+  "main": "script.js",
+  "scripts": {
+    "test": "eslint *.js"
+  },
+  "devDependencies": {
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1"
+  }
+}
