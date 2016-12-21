@@ -1,9 +1,9 @@
-function generatePDF() {
+function generatePDF() { // eslint-disable-line no-unused-vars
   window.dronedeploy.Plans.getCurrentlyViewed()
   .then((res) => fetchTileDataFromPlan(res))
   .then((res) => getDataUrlViaCustomWebServer(res.tiles))
-  .then((encoded_tiles) => {
-    const docDefinition = generatePDFcontent(encoded_tiles);
+  .then((encodedTiles) => {
+    const docDefinition = generatePDFcontent(encodedTiles);
     // decided to have client side PDF printing with the pure javascript module: pdfmake
     pdfMake.createPdf(docDefinition).open();
   })
@@ -19,7 +19,7 @@ function getDataUrlViaCustomWebServer(tiles) {
   const webServerUrl = 'https://sample-app-server.herokuapp.com/getEncodedUrl/';
   const body = JSON.stringify({
     'tile': tiles
-  })
+  });
   return fetch(webServerUrl, {
     method: 'POST',
     body: body
@@ -40,12 +40,12 @@ function generatePDFcontent(list) {
   for (let i = 0; i < list.length; i++) {
     content.push({
       image: `data:image/jpeg;base64,${list[i]}`
-    })
+    });
   }
   return (
-    {
-      content: content,
-      styles: contentStyle
-    }
+  {
+    content: content,
+    styles: contentStyle
+  }
   );
 }
